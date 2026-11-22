@@ -11,15 +11,15 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: '8.2'
       - name: Unzip project
-        run: unzip -q AIAssistant.zip
+        run: |
+          mkdir proj
+          unzip -q "AIAssistant_2 (1).zip" -d proj
+          chmod +x proj/AIAssistant/gradlew
       - name: Build
-        working-directory: AIAssistant
-        run: gradle assembleDebug --no-daemon
+        working-directory: proj/AIAssistant
+        run: ./gradlew assembleDebug --no-daemon
       - uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
-          path: AIAssistant/app/build/outputs/apk/debug/app-debug.apk
+          path: proj/AIAssistant/app/build/outputs/apk/debug/app-debug.apk
