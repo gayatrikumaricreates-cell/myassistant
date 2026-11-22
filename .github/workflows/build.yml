@@ -14,7 +14,9 @@ jobs:
       - name: Unzip project
         run: |
           mkdir proj
-          unzip -q AIAssistant_3.zip -d proj
+          ZIP=$(ls AIAssistant_*.zip | sort -V | tail -1)
+          echo "Using $ZIP"
+          unzip -q "$ZIP" -d proj
           chmod +x proj/AIAssistant/gradlew
       - name: Build
         working-directory: proj/AIAssistant
